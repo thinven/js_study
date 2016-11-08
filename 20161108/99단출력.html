@@ -1,0 +1,309 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>구구단 미션</title>
+
+        <style>
+			#output {
+				border: 1px solid #000;
+				width: 400px;
+				height: 400px;
+				font-size: 11pt;
+			}
+        </style>
+
+        <script src="../libs/jquery-1.11.0.min.js"></script>
+
+        <script>
+        /*
+         미션01-99단 출력을 클래스로 만들기
+         구구단 중 3단, 6단, 9단을 전문으로 출력하는 메서드를 가진 클래스를 다음 요구사항에 맞게 만들어주세요.
+
+         요구사항:
+         1. 3단출력, 6단출력, 9단출력 버튼이 눌리면 해당 구구단이 출력될 수 있게 해당 메서드를 호출해 주세요.
+         2. 지우기 버튼을 누르면 출력창의 정보를 모두 지워주세요.
+         3. prototype 방식 클래스로 만들어 주세요.
+
+         */
+        $(document).ready(function() {
+            /*
+            var g = new Gugu($("#output"));
+            
+            $(".dan").click(function(){
+                app.sf.exe($(this).data("dan"));
+            });
+            
+            $("#clear").click(function() {
+                // 출력된 구구단을 지우는 메서드를 호출해주세요.
+                $("#output").html('');
+            })
+            */
+            
+            //$("#gugudan-wrap").gugudan({});
+            //$(".gugudan").gugudan({});
+            
+            $(".dan").click(function(){
+                //es6obj.init($(".output"));
+                //es6obj.gugu($(this).data("dan"));
+                //var o6 = new Gugu6($(".output"));
+                //o6.exe($(this).data("dan"));
+                //app.gugu.exe($(this).data("dan"));
+            });
+            
+            var o = $("#gugudan-wrap").gugudan({
+                dancls : '.danm',
+                event : 'mouseover',
+                callback : function(dan){
+                    console.log(dan + "단 출력" );
+                }
+            }).find(".clsname");
+            
+            
+            var test = "sldkjflaksdjflkajsdf";
+            alert(test.substring(1,2));
+            
+            
+            
+            
+        });
+
+        
+        // 오브젝트 리터널 방식으로 객체 생성
+        var o = {
+            init : function($v){
+                this.$view = $v;
+                this.$view.html('');
+            },
+            gugu : function (val){
+                for(var i = 1;i < 10; i++){
+                    this.$view.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                }
+            }
+        };
+        //o.init($("#output"));
+        //o.gugu($(this).data("dan"));
+            
+        // 오브젝트 리터널 방식 es6
+        var es6obj = {
+            init($v){
+                this.$view = $v;
+                this.$view.html('');
+            },
+            gugu(val){
+                for(var i = 1;i < 10; i++){
+                    this.$view.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                }
+            }
+        };
+        //es6obj.init($("#output"));
+        //es6obj.gugu($(this).data("dan"));
+            
+        // 프로토타입 객체.
+        function Gugu($v){
+            this.init($v);
+        }
+        Gugu.prototype.init = function($v){
+            this.$view = $v;
+        };
+        Gugu.prototype.exe = function(val) {
+            this.$view.html('');
+            for(var i = 1;i < 10; i++){
+                this.$view.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+            }
+        };
+        // var o3 = new Gugu($("#output"));
+        // o3.exe($(this).data("dan"));
+        
+        // 클래스 사용 es6
+        class Gugu6{
+            constructor($v){
+                this.init($v);
+            }
+            init($v){
+                this.$view = $v;
+            }
+            exe(val){
+                this.$view.html('');
+                for(var i = 1;i < 10; i++){
+                    this.$view.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                }
+            }
+        }
+            // var o6 = new Gugu6($("#output"));
+            // o6.exe($(this).data("dan"));
+            
+        // self function
+        var app = {};
+        (function(app){
+            function Gugu(selector){
+                this.init(selector);
+            }
+            Gugu.prototype.init = function(selector){
+                this.selector = selector;
+                this.$view = $(selector);
+            };
+            Gugu.prototype.reset = function(){
+                this.$view = $(this.selector);
+            };
+            Gugu.prototype.exe = function(val) {
+                this.reset();
+                this.$view.html('');
+                for(var i = 1;i < 10; i++){
+                    this.$view.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                }
+            };
+
+            app.sf = new Gugu("#output");
+        })(app);
+        // app.sf.reset();
+        // app.sf.exe($(this).data("dan"));
+            
+        // self function es6
+        {
+            class Gugu6{
+                constructor($v){
+                    this.init($v);
+                }
+                init($v){
+                    this.$view = $v;
+                }
+                exe(val){
+                    this.init($(".output"));
+                    this.$view.html('');
+                    for(var i = 1;i < 10; i++){
+                        this.$view.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                    }
+                }
+            }
+            app.gugu = new Gugu6($(".output"));
+        }
+            // 권지연.
+        // plugin
+        (function($){
+            // 프로토타입 객체 정의문.
+            function Gugudan(selector, settings){
+                this.selector = selector;
+                this.settings = settings;
+                
+                this.init();
+                this.initEvent();
+            }
+            Gugudan.prototype.init = function(){
+                this.$wrap = $(this.selector);
+                this.$btnDan = this.$wrap.find(this.settings.btncls);
+                this.$btnClear = this.$wrap.find(this.settings.clearcls);
+                this.$output = this.$wrap.find(this.settings.outcls);
+            };
+            Gugudan.prototype.initEvent = function(){
+                var _this = this;
+                this.$btnDan.off("click").on("click", function(){
+                    var val = $(this).data("dan");
+                    _this.$btnClear.trigger("click");
+                    for(var i = 1;i < 10; i++){
+                        _this.$output.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                    }
+                });
+                
+                this.$btnClear.off("click").on("click", function(){
+                    _this.$output.html('');
+                });
+            };
+            
+            $.fn.gugudan = function(userOptions){
+                var dftOptions = {
+                    btncls : '.dan',
+                    outcls : '.output',
+                    clearcls : '.clear'
+                };
+                var settings = $.extend({}, dftOptions, userOptions);
+                return this.each(function(){
+                    var o = new Gugudan(this, settings);
+                });
+            };
+        })(jQuery);
+
+        // Plugin es6.
+        (function($){
+            
+            class Gugudan{
+                constructor(target, options){
+                    this.options = options;
+                    
+                    this.init(target);
+                    this.initEvent();
+                }
+                init(target){
+                    this.$wrap = $(target);
+                    this.$btnDans = this.$wrap.find(this.options.dancls);
+                    this.$output = this.$wrap.find(this.options.outputcls);
+                    this.$btnClear = this.$wrap.find(this.options.clearcls);
+                }
+                initEvent(){
+                    let _this = this;
+                    this.$btnDans.off(this.options.event).on(this.options.event, function(){
+                        var val = $(this).data("dan");
+                        _this.$btnClear.trigger(_this.options.event);
+                        for(var i = 1;i < 10; i++){
+                            _this.$output.append(val + ' * ' + i + ' = ' + (val * i) + '<br/>');
+                        }
+                        _this.options.callback(val);
+                    });
+                    
+                    this.$btnClear.off(this.options.event).on(this.options.event, ()=>{
+                        this.$output.html('');
+                    });
+                }
+            }
+            
+            $.fn.gugudan = function(userOptions){
+                var dftOptions = {
+                    dancls : '.dan',
+                    outputcls : '.output',
+                    clearcls : '.clear',
+                    event : 'click',
+                    callback : function(){}
+                };
+                var settings = $.extend({}, dftOptions, userOptions);
+                this.find = function(css){
+                    console.log("메롱.");
+                }
+                return this.each(function(){
+                    new Gugudan(this, settings);
+                });
+            };
+            
+        })(jQuery);
+        
+        // $("#id").gugudan({사용자옵션들...});
+        // $(".classname").gugudan({});
+            
+            
+        </script>
+    </head>
+
+    <body>
+        <div id="gugudan-wrap" class="gugudan">
+            <div>
+                <button id="3dan" class="danm" data-dan="3">
+                    3단출력
+                </button>
+                <button id="6dan" class="danm" data-dan="6">
+                    6단출력
+                </button>
+                <button id="9dan" class="danm" data-dan="9">
+                    9단출력
+                </button>
+                <button id="9dan" class="danm" data-dan="4">
+                    4단출력
+                </button>
+                <button class="clear">
+                    지우기
+                </button>
+            </div>
+            <div class="output">
+                여기에서 선택한 구구단이 출력됩니다.
+            </div>
+        </div>
+    </body>
+</html>
