@@ -21,7 +21,7 @@
 
       $(document).ready(function() {
         $("#cal").click(function(){
-          app.cal.cal({
+          app.math.cal({
             val1id : "#val"
           });
         });
@@ -65,7 +65,7 @@
         Cal.prototype.div = function () {
           return this.val1 / this.val2;
         };
-        app.cal = new Cal();
+        app.math = new Cal();
       })(app);
 
     </script>
