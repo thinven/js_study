@@ -20,14 +20,15 @@
     <script>
 
       $(document).ready(function() {
+        var o3 = new Cal();
         $("#cal").click(function(){
-          o.cal({
+          o3.cal({
             val1id : "#val"
           });
         });
       });
 
-      let o = {
+      class Cal{
         set(userOptions) {
           let dftOptions = {
             val1id : "#val1",
@@ -43,25 +44,25 @@
           this.opt = $(s.opid).find("option:selected").text();
           this.$output = $(s.outid);
           return this;
-        },
+        };
         cal(userOptions) {
           this.set(userOptions);
           this.$output.html(" " + this.val1 + " " + this.opt + " " + this.val2 + " = "
           + this[this.op](this.val1, this.val2));
-        },
-        add() {
+        };
+        add () {
           return this.val1 + this.val2;
-        },
+        };
         sub() {
           return this.val1 - this.val2;
-        },
+        };
         mul() {
           return this.val1 * this.val2;
-        },
+        };
         div() {
           return this.val1 / this.val2;
-        }
-      };
+        };
+      }
 
     </script>
   </head>
