@@ -26,23 +26,33 @@
           var op = $("#op").val();
           var opt = $("#op option:selected").text();
           var $output = $("#output");
+          var o3 = new Cal();
           $output.html(" " + val1 + " " + opt + " " + val2 + " = "
-          + window[op](val1, val2));
+          + o3[op](val1, val2));
         });
       });
 
-      function add(val1, val2) {
+      //case 2 프로토타입 객체방식.
+      function Cal(){
+
+      }
+      Cal.prototype.add = function (val1, val2) {
         return val1 + val2;
-      }
-      function sub(val1, val2) {
+      };
+      Cal.prototype.sub = function (val1, val2) {
         return val1 - val2;
-      }
-      function mul(val1, val2) {
+      };
+      Cal.prototype.mul = function (val1, val2) {
         return val1 * val2;
-      }
-      function div(val1, val2) {
+      };
+      Cal.prototype.div = function (val1, val2) {
         return val1 / val2;
-      }
+      };
+
+
+
+
+
     </script>
   </head>
 

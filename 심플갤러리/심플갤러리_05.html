@@ -54,67 +54,60 @@
                 oncomplete : function(){console.log("gallery completed!!!");}
             });
 
-
-            console.log(o);
         });
 
         ////////////////////////////////////////////////////////////////
+        // 오브젝트 리터럴 (es6)
 
-
-        var o = {
-          test : function(){this}
-        };
-
-        // 오브젝트 리터럴 방식.
-        var o = {
-            init : function(userOptions){
-              var dftOptions = {
-                  imgsid : '',
-                  $images : null,
-                  count : 4,
-                  width : 150,
-                  height : 150,
-                  oncomplete : function(){}
-              };
-              this.s = $.extend({}, dftOptions, userOptions ||{});
-            },
-            validate : function (s){
-              var s = this.s;
-              if (s.imgsid) {
-                  if (s.$images) {
-                      s.$images.siblings(".tmpl").remove();
-                      s.$images.parent().append($(s.imgsid).addClass("tmpl"));
-                  } else {
-                      s.$images = $(s.imgsid);
-                  }
-              }
-            },
-            //이미지 배열하기
-            showGallery : function (userOptions){
-                this.init(userOptions);
-                var s = this.s;
-
-                this.validate();
-                // 이미지 개수 구하기.
-                var length = s.$images.length;
-
-                // 이미지 배열하기.
-                for(var i=0;i<length;i++){
-                    // n번째 이미지 구하기
-                    var $img = s.$images.eq(i);
-
-                    // 위치 값 구하기
-                    var x = 100+((i%s.count)*s.width);
-                    var y = 100+(parseInt(i/s.count)*s.height);
-
-                    // 위치 설정
-                    $img.css({
-                        left:x,
-                        top:y
-                    });
+        let o = {
+          init(userOptions){
+            let dftOptions = {
+                imgsid : '',
+                $images : null,
+                count : 4,
+                width : 150,
+                height : 150,
+                oncomplete : function(){}
+            };
+            this.s = $.extend({}, dftOptions, userOptions ||{});
+          },
+          validate(){
+            let s = this.s;
+            if (s.imgsid) {
+                if (s.$images) {
+                    s.$images.siblings(".tmpl").remove();
+                    s.$images.parent().append($(s.imgsid).addClass("tmpl"));
+                } else {
+                    s.$images = $(s.imgsid);
                 }
-                s.oncomplete();
             }
+          },
+          showGallery(userOptions) {
+            this.init(userOptions);
+            let s = this.s;
+
+            this.validate();
+
+            // 이미지 개수 구하기.
+            let length = s.$images.length;
+
+            // 이미지 배열하기.
+            for(let i=0;i<length;i++){
+                // n번째 이미지 구하기
+                let $img = s.$images.eq(i);
+
+                // 위치 값 구하기
+                let x = 100+((i%s.count)*s.width);
+                let y = 100+(parseInt(i/s.count)*s.height);
+
+                // 위치 설정
+                $img.css({
+                    left:x,
+                    top:y
+                });
+            }
+            s.oncomplete();
+          }
         };
 
     </script>
