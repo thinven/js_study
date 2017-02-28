@@ -58,28 +58,31 @@
 
 		$(document).ready(function(){
 			// 인스턴스 생성
-			var tab1 = new TabMenu("#tabMenu1");
+			var tab1 = new TabMenu();
+			$(".btnSelect").trigger("click");
+			tab1.init({queryid:'input[name="query2"]'});
+			$(".btnSelect").trigger("click");
 
-      $("#btnSelect").click(function(){
-        var idx = $("input[name='query']").val();
-        tab1.setSelectItemByIndex(idx);
-      });
 		});
 
-		function TabMenu(selector) {
-			this.$tabMenu = null;
-			this.$menuItems = null;
-			this.$selectMenuItem = null;
-
-			// 요소 초기화및 이벤트 등록 호출하기
-			this.init(selector);
+		function TabMenu(userOptions) {
+			this.init(userOptions);
 			this.initEvent();
 		}
 
 		// 요소 초기화
-		TabMenu.prototype.init = function(selector) {
-			this.$tabMenu = $(selector);
+		TabMenu.prototype.init = function(userOptions) {
+			var dftOptions = {
+				selector : '#tabMenu1',
+				queryid : 'input[name="query"]'
+			};
+			var s = $.extend({}, dftOptions, userOptions || {});
+			this.$tabMenu = $(s.selector);
 			this.$menuItems = this.$tabMenu.find("li");
+			this.$btn = this.$tabMenu.find(".btnSelect");
+			this.queryid = s.queryid;
+			this.s = s;
+
 		};
 
 		// 이벤트 등록
@@ -88,6 +91,12 @@
 			this.$menuItems.on("click", function() {
 				objThis.setSelectItem($(this));
 			});
+
+			this.$btn.click(function(){
+        var idx = $(objThis.queryid).val();
+        objThis.setSelectItemByIndex(idx);
+				console.log("print : " + idx);
+      });
 		};
 
 		// $menuItem에 해당하는 메뉴 아이템 선택하기
@@ -103,7 +112,7 @@
 		};
 
     TabMenu.prototype.setSelectItemByIndex = function(index) {
-      this.setSelectItem(this.$menuItems.get(index)));
+      this.setSelectItem($(this.$menuItems.get(index)));
     };
 
 
@@ -112,16 +121,19 @@
 </head>
 
 <body>
-	<button id="btnSelect">인덱스로 메뉴 아이템 선택하기</button>
-  <input type="text" name="query" value="3" />
-	<ul class="tab-menu" id="tabMenu1">
-		<li class="menuitem1">google</li>
-		<li class="menuitem2">facebook</li>
-		<li class="menuitem3">pinterest</li>
-		<li class="menuitem4">twitter</li>
-		<li class="menuitem5">airbnb</li>
-		<li class="menuitem6">path</li>
-	</ul>
+	<div id="tabMenu1">
+		<button class="btnSelect">인덱스로 메뉴 아이템 선택하기</button>
+	  <input type="text" name="query" value="3" />
+		<input type="text" name="query2" value="2" />
+		<ul class="tab-menu">
+			<li class="menuitem1">google</li>
+			<li class="menuitem2">facebook</li>
+			<li class="menuitem3">pinterest</li>
+			<li class="menuitem4">twitter</li>
+			<li class="menuitem5">airbnb</li>
+			<li class="menuitem6">path</li>
+		</ul>
+	</div>
 
 
 </body>
