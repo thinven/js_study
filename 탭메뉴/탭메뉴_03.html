@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+	<style>
+		.tab-menu {
+			list-style: none;
+			height:80px;
+		}
+		.tab-menu li {
+			width:99px;
+			height:40px;
+			background-position-y:0;
+			text-indent: -1000px;
+			overflow: hidden;
+			display: inline-block;
+			float:left;
+		}
+		.tab-menu li:hover {
+			background-position-y: -40px;
+		}
+		.tab-menu li.select {
+			background-position-y: -80px;
+			height:80px;
+		}
+		.tab-menu li.menuitem1 {
+			background-image: url(images/newbtn.bar.1.png);
+		}
+		.tab-menu li.menuitem2 {
+			background-image: url(images/newbtn.bar.2.png);
+		}
+		.tab-menu li.menuitem3 {
+			background-image: url(images/newbtn.bar.3.png);
+		}
+		.tab-menu li.menuitem4 {
+			background-image: url(images/newbtn.bar.4.png);
+		}
+		.tab-menu li.menuitem5 {
+			background-image: url(images/newbtn.bar.5.png);
+		}
+		.tab-menu li.menuitem6 {
+			background-image: url(images/newbtn.bar.6.png);
+		}
+	</style>
+
+    <script type="text/javascript"  src="../libs/jquery-1.11.0.min.js"> </script>
+	<script>
+		/*
+		 미션 04: 탭메뉴 기능 추가하기
+		 마지막 미션입니다.
+		 이번 미션은 앞에서 만든 탭메뉴에 인덱스 값으로 메뉴 아이템을 선택하는 기능을 추가하는 것입니다.
+		 인덱스로 메뉴 아이템 선택하기 버튼(#btnSelect)을 누르면
+		 선택하고 싶은 메뉴 아이템의 인덱스 값을 입력받은 후 해당 메뉴가 선택될 수 있게 만들어 주세요.
+
+		 */
+
+
+		$(document).ready(function(){
+			// 인스턴스 생성
+			app.test.show({
+				selector : '#tabMenu2'
+			});
+
+			app.test.show({
+				selector : '#tabMenu1'
+			});
+		});
+
+		// 즉시실행함수.
+		var app = {};
+		(function(app){
+			// 프로토타입 객체 정의문.....
+			function TabMenu(userOptions) {
+				this.init(userOptions);
+				this.initEvent();
+			}
+			TabMenu.prototype.show = function(userOptions) {
+				this.init(userOptions);
+				this.initEvent();
+			};
+			// 요소 초기화
+			TabMenu.prototype.init = function(userOptions) {
+				var dftOptions = {
+					selector : '#tabMenu1',
+					queryid : 'input[name="query"]'
+				};
+				var s = $.extend({}, dftOptions, userOptions || {});
+				this.$tabMenu = $(s.selector);
+				this.$menuItems = this.$tabMenu.find("li");
+				this.$btn = this.$tabMenu.find(".btnSelect");
+				this.queryid = s.queryid;
+				this.s = s;
+
+			};
+
+			// 이벤트 등록
+			TabMenu.prototype.initEvent = function() {
+				var objThis = this;
+				this.$menuItems.on("click", function() {
+					objThis.setSelectItem($(this));
+				});
+
+				this.$btn.click(function(){
+	        var idx = $(objThis.queryid).val();
+	        objThis.setSelectItemByIndex(idx);
+					console.log("print : " + idx);
+	      });
+			};
+
+			// $menuItem에 해당하는 메뉴 아이템 선택하기
+			TabMenu.prototype.setSelectItem = function($menuItem) {
+				// 기존 선택메뉴 아이템을 비활성화 처리 하기
+				if (this.$selectMenuItem) {
+					this.$selectMenuItem.removeClass("select");
+				}
+
+				// 신규 아이템 활성화 처리 하기
+				this.$selectMenuItem = $menuItem;
+				this.$selectMenuItem.addClass("select");
+			};
+
+	    TabMenu.prototype.setSelectItemByIndex = function(index) {
+	      this.setSelectItem($(this.$menuItems.get(index)));
+	    };
+
+			//
+			app.test = new TabMenu();
+
+		})(app);
+
+	</script>
+</head>
+
+<body>
+	<div id="tabMenu1">
+		<button class="btnSelect">인덱스로 메뉴 아이템 선택하기</button>
+	  <input type="text" name="query" value="3" />
+		<input type="text" name="query2" value="2" />
+		<ul class="tab-menu">
+			<li class="menuitem1">google</li>
+			<li class="menuitem2">facebook</li>
+			<li class="menuitem3">pinterest</li>
+			<li class="menuitem4">twitter</li>
+			<li class="menuitem5">airbnb</li>
+			<li class="menuitem6">path</li>
+		</ul>
+	</div>
+
+	<div id="tabMenu2">
+		<button class="btnSelect">인덱스로 메뉴 아이템 선택하기</button>
+	  <input type="text" name="query" value="3" />
+		<input type="text" name="query2" value="2" />
+		<ul class="tab-menu">
+			<li class="menuitem1">google</li>
+			<li class="menuitem2">facebook</li>
+			<li class="menuitem3">pinterest</li>
+			<li class="menuitem4">twitter</li>
+			<li class="menuitem5">airbnb</li>
+			<li class="menuitem6">path</li>
+		</ul>
+	</div>
+
+
+</body>
+
+</html>

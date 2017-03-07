@@ -115,33 +115,73 @@
     </script>
     <script type="text/babel">
 
-    class Toggle extends React.Component {
+    class Toggle123 extends React.Component {
+
       constructor(props) {
         super(props);
-        this.state = {isToggleOn: true, test:'wow'};
+        this.state = {isToggleOn134: true, test:'wow'};
 
         // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
+        this.handleEvent2 = this.handleEvent2.bind(this);
       }
 
       handleClick() {
         this.setState(prevState => ({
-          isToggleOn: !prevState.isToggleOn,
+          isToggleOn134: !prevState.isToggleOn134,
           test: prevState.test + 'ooh'
         }));
       }
 
+      handleEvent2() {
+        o.showGallery({
+            imgsid : "#container1 img",
+            count:6
+        });
+
+        o.showGallery({
+            $images : $("#container2 img"),
+            width : 100,
+            height : 100,
+            oncomplete : function(){console.log("gallery completed!!!");}
+        });
+      }
+
       render() {
         return (
-          <button onClick={this.handleClick}>
-            {this.state.isToggleOn ? 'ON' : 'OFF'}
-          </button>
+          <div>
+            <button onClick={this.handleEvent2}>적용</button>
+            <p>container1</p>
+            <div className="image-container" id="container1">
+
+                <img src="banners/1.png" />
+                <img src="banners/2.png" />
+                <img src="banners/3.png" />
+                <img src="banners/4.png" />
+                <img src="banners/5.png" />
+                <img src="banners/6.png" />
+                <img src="banners/7.png" />
+                <img src="banners/8.png" />
+            </div>
+             <p>container2</p>
+
+             <div className="image-container" id="container2">
+                <img src="banners/1.png" />
+                <img src="banners/2.png" />
+                <img src="banners/3.png" />
+                <img src="banners/4.png" />
+                <img src="banners/5.png" />
+                <img src="banners/6.png" />
+                <img src="banners/7.png" />
+                <img src="banners/8.png" />
+            </div>
+          </div>
         );
       }
       }
 
       ReactDOM.render(
-        <Toggle />,
+        <Toggle123 />,
         document.getElementById('root')
       );
 
@@ -151,30 +191,6 @@
 
 <body>
     <div id="root"></div>
-    <p>container1</p>
-    <div class="image-container" id="container1">
-
-        <img src="banners/1.png" >
-        <img src="banners/2.png" >
-        <img src="banners/3.png" >
-        <img src="banners/4.png" >
-        <img src="banners/5.png" >
-        <img src="banners/6.png" >
-        <img src="banners/7.png" >
-        <img src="banners/8.png" >
-    </div>
-     <p>container2</p>
-
-     <div class="image-container" id="container2">
-        <img src="banners/1.png" >
-        <img src="banners/2.png" >
-        <img src="banners/3.png" >
-        <img src="banners/4.png" >
-        <img src="banners/5.png" >
-        <img src="banners/6.png" >
-        <img src="banners/7.png" >
-        <img src="banners/8.png" >
-    </div>
 </body>
 
 </html>
